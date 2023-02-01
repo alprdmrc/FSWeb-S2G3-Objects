@@ -15,9 +15,23 @@ const serpmeKahvalti = {isim: "Serpme Kahvaltı", fiyat: 16, kategori:"Kahvaltı
 */
 
 
-function MenuElemaniOlustur(/*Kodlar buraya*/){
-	/*Kodlar buraya*/
+function MenuElemaniOlustur(isim, fiyat, kategori){
+	const eleman = {
+		isim : isim,
+		fiyat : fiyat,
+		kategori : kategori,
+	}
+	return eleman;
 }
+function MenuElemaniOlustur2(isim, fiyat, kategori){
+	const eleman = {};
+	eleman.isim = isim;
+	eleman['fiyat'] = fiyat;
+	eleman.kategori = kategori;
+	return eleman;
+}
+
+// console.log(MenuElemaniOlustur2('Cheeseburger', 8, 'Burgerler'))
 
 
 
@@ -50,7 +64,13 @@ const burger = {
 	isim: "Burger", 
 	fiyat: 18, 
 	kategori: "Öğle Yemeği", 
-
+	indirim: function(meslek){
+		if(meslek === "öğretmen" || meslek === "öğrenci"){
+			return this.fiyat * 0.75
+		} else {
+			return this.fiyat * 0.9
+		}
+	}
 }
 
 
@@ -73,12 +93,26 @@ const degerlendirmeler = [
 */
 
 
+// for(let i=0;i<degerlendirmeler.length;i++){
+// 	if (degerlendirmeler[i].isim==='Ahmet'){
+// 		console.log(degerlendirmeler[i].geribildirim)
+// 	}
+// }
+
+
 
 /*  Görev 4 (ototest yok):  
 	Reyna'nın geribildirimi girilmemiş! Aşağıdakileri uygulayın: (fonksiyona gerek yok) 
 	1. Bu geribildirimi Reyna'nın değerlendirmesine ekleyin - "bu mekan bir harika dostum, yine de garsonun gülümsememesinden puan kırdım"
 	2. degerlendirmeler dizisini konsolda görüntüleyerek çalışmanızı kontrol edin
 */
+// for(let i=0;i<degerlendirmeler.length;i++){
+// 	if(degerlendirmeler[i].isim==='Reyna'){
+// 		degerlendirmeler[i].geribildirim = "bu mekan bir harika dostum, yine de garsonun gülümsememesinden puan kırdım"
+// 	}
+// }
+// console.log(degerlendirmeler[7]);
+
 
 
 
@@ -94,9 +128,14 @@ const degerlendirmeler = [
 */
 
 
-function DegerledirmeEkle(/*Kodlar buraya */){
-	/*Kodlar buraya */
-	
+function DegerledirmeEkle(arr, isim, puan, geribildirim){
+	const eleman = {
+		isim: isim,
+		puan: puan,
+		geribildirim: geribildirim,
+	}
+	arr.push(eleman);
+	return arr;
 }
 
 
@@ -112,11 +151,10 @@ function DegerledirmeEkle(/*Kodlar buraya */){
 */
 
 
-function AnahtardanDegerlendirmeAl(/*Kodlar buraya*/) {
-	/*Kodlar buraya*/
-
+function AnahtardanDegerlendirmeAl(arr,key) {
+	return `${arr[key].isim} isimli kişi ${arr[key].puan} puan verdi ve şunları yazdı: ${arr[key].geribildirim}`
 }
-
+// console.log(AnahtardanDegerlendirmeAl(degerlendirmeler,0))
 
 
 /*  Görev 7:  
@@ -132,10 +170,10 @@ function AnahtardanDegerlendirmeAl(/*Kodlar buraya*/) {
 */
 
 
-function SonDegerlendirmeyiAl(/*Kodlar buraya*/) {
-	/*Kodlar buraya*/
+function SonDegerlendirmeyiAl(arr) {
+	return `${arr[arr.length-1].isim} isimli kişi ${arr[arr.length-1].puan} puan verdi ve şunları yazdı: ${arr[arr.length-1].geribildirim}`
 } 
-
+// console.log(SonDegerlendirmeyiAl(degerlendirmeler));
 
 
 /////////////// BONUS  GÖRVLER////////////////////
@@ -154,9 +192,16 @@ function SonDegerlendirmeyiAl(/*Kodlar buraya*/) {
 	]
 */
 
-function PuanaGoreDegerlendirmeAl(/* Kodlar buraya */) {
-    /* Kodlar buraya */
+function PuanaGoreDegerlendirmeAl(arr,puan) {
+	let newArr = [];
+    for (let i=0;i<arr.length;i++){
+		if (arr[i].puan >= puan && arr[i].puan < puan+1) {
+			newArr.push(arr[i])
+		}
+	}
+	return newArr;
 }
+// console.log(PuanaGoreDegerlendirmeAl(degerlendirmeler, 4))
 
 
 /*  BONUS 2:    
@@ -166,9 +211,16 @@ function PuanaGoreDegerlendirmeAl(/* Kodlar buraya */) {
 	
 */
 
-function UzunDegerlendirmeleriAl(/* Kodlar buraya */) {
-    /* Kodlar buraya */
+function UzunDegerlendirmeleriAl(arr) {
+	let newArr = [];
+    for(let i=0;i<arr.length;i++){
+		if (arr[i].geribildirim.split(' ').length>15){
+			newArr.push(arr[i])
+		}
+	}
+	return newArr;
 }
+console.log(UzunDegerlendirmeleriAl(degerlendirmeler))
 
 
 /*  BONUS 3:  
@@ -189,10 +241,57 @@ function UzunDegerlendirmeleriAl(/* Kodlar buraya */) {
 */
 
 
-function arabaYapici(/* Kodlar buraya */) {
-    /* Kodlar buraya */
-    
+function arabaYapici2(isim, km) {
+	this.isim = isim,
+	this.km = km,
+	this.surus = (mesafe) => {
+		this.km += mesafe
+		return this.km
+	}
 }
+const araba2 = new arabaYapici2('alper',30)
+
+
+class arabaYapici3{
+	constructor(isim,km){
+		this.isim = isim,
+		this.km = km
+	}
+	surus(mesafe) {
+		this.km += mesafe
+		return this.km
+	}
+}
+const araba3 = new arabaYapici3('alper', 30)
+
+
+function arabaYapici(isim, km) {
+    const car = {
+		isim : isim,
+		km : km,
+		surus : function(mesafe) {
+			this.km += mesafe
+			return this.km
+		}
+	}
+	return car;
+}
+const araba1 = arabaYapici('alper',30)
+
+
+console.log(araba2)
+console.log(araba2.surus(100))
+console.log(araba2.surus(100))
+console.log(araba2)
+console.log(araba3)
+console.log(araba3.surus(100))
+console.log(araba3.surus(100))
+console.log(araba3)
+console.log(araba1)
+console.log(araba1.surus(100))
+console.log(araba1.surus(100))
+console.log(araba1)
+
 
 
 /*  Buradan aşağıdaki kodları değiştirmeyin lütfen */
